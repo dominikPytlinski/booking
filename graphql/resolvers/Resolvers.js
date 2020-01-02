@@ -1,5 +1,6 @@
 const UserModel = require('../../models/User');
 const RoleModel = require('../../models/Role');
+const EventModel = require('../../models/Event');
 const bcrypt = require('bcryptjs');
 
 const Query = {
@@ -10,6 +11,22 @@ const Query = {
             id: user._doc._id, 
             password: null 
         }
+    },
+    users: async () => {
+        const users = await UserModel.find({});
+        return users.map(user => {
+            return {
+                ...user._doc,
+                id: user._doc._id
+            }
+        });
+    },
+    event: async (parent, args) => {
+        const event = await EventModel.findById(args.id);
+        return { 
+            ...event._doc,
+            id: event._doc._id
+         }
     }
 }
 
@@ -32,6 +49,21 @@ const Mutation = {
         });
         const newRole = await role.save();
         return { ...newRole._doc, id: newRole._doc._id }
+    },
+    createEvent: async (parent, args) => {
+        const { title, description, date } = args.input;
+        const event = new EventModel({
+            title: title,
+            description: description,
+            date: date,
+            creatorId: "5e0e58d7f995260aecdf45d5"
+        });
+
+        const newEvent = await event.save();
+        return {
+            ...newEvent._doc,
+            id: newEvent._doc._id
+        }
     }
 }
 
@@ -41,4 +73,10 @@ const User = {
     }
 }
 
-module.exports = { Query, Mutation, User };
+const Event = {
+    creator: async (parent) => {
+        return await UserModel.findById(parent.creatorId);
+    }
+}
+
+module.exports = { Query, Mutation, User, Event };

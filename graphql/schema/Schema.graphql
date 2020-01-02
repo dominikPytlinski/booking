@@ -10,6 +10,14 @@ type Role {
     role: String!
 }
 
+type Event {
+    id: ID!
+    title: String!
+    description: String!
+    date: String!
+    creator: User!
+}
+
 input userInput {
     email: String!
     password: String!
@@ -20,11 +28,20 @@ input roleInput {
     role: String!
 }
 
+input eventInput {
+    title: String!
+    description: String!
+    date: String!
+}
+
 type Mutation {
     createUser(input: userInput): User!
     createRole(input: roleInput): Role!
+    createEvent(input: eventInput): Event!
 }
 
 type Query {
     user(id: ID!): User!
+    users: [User!]!
+    event(id: ID!): Event!
 }
