@@ -18,6 +18,12 @@ type Event {
     creator: User!
 }
 
+type Booking {
+    id: ID!
+    user: User!
+    event: Event!
+}
+
 input userInput {
     email: String!
     password: String!
@@ -34,14 +40,21 @@ input eventInput {
     date: String!
 }
 
+input bookingInput {
+    userId: ID!
+    eventId: ID!
+}
+
 type Mutation {
     createUser(input: userInput): User!
     createRole(input: roleInput): Role!
     createEvent(input: eventInput): Event!
+    bookEvent(input: bookingInput): Booking!
 }
 
 type Query {
     user(id: ID!): User!
     users: [User!]!
     event(id: ID!): Event!
+    events: [Event!]!
 }

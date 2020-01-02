@@ -1,6 +1,7 @@
 const UserModel = require('../../models/User');
 const RoleModel = require('../../models/Role');
 const EventModel = require('../../models/Event');
+const BookingModel = require('../../models/Booking');
 const bcrypt = require('bcryptjs');
 
 const Query = {
@@ -27,6 +28,15 @@ const Query = {
             ...event._doc,
             id: event._doc._id
          }
+    },
+    events: async () => {
+        const events = await EventModel.find({});
+        return events.map(event => {
+            return {
+                ...event._doc,
+                id: event._doc._id
+            }
+        });
     }
 }
 
@@ -63,6 +73,20 @@ const Mutation = {
         return {
             ...newEvent._doc,
             id: newEvent._doc._id
+        }
+    },
+    bookEvent: async (parent, args) => {
+        const { userId, eventId } = args.input;
+        const booking = new BookingModel({
+            userId,
+            eventId
+        });
+
+        const newBooking = await booking.save();
+
+        return {
+            ...newBooking._doc,
+            id: newBooking._doc._id
         }
     }
 }
