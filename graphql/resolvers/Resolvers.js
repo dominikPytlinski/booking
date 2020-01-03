@@ -64,7 +64,9 @@ const Mutation = {
     createEvent: async (parent, args) => {
         const creatorUser = await UserModel.findById("5e0f712753a8d2203028ed23");
         const createdEvents = creatorUser.events ? creatorUser.events : [];
+
         const { title, description, date } = args.input;
+
         const event = new EventModel({
             title: title,
             description: description,
@@ -73,10 +75,11 @@ const Mutation = {
         });
 
         const newEvent = await event.save();
+
         createdEvents.push(newEvent._doc._id);
 
-        const updatedUser = await UserModel.updateOne({_id: '5e0f712753a8d2203028ed23'}, {events: createdEvents});
-        console.log(updatedUser);
+        await UserModel.updateOne({_id: '5e0f712753a8d2203028ed23'}, {events: createdEvents});
+        
         return {
             ...newEvent._doc,
             id: newEvent._doc._id
