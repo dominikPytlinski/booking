@@ -3,6 +3,7 @@ const RoleModel = require('../../models/Role');
 const EventModel = require('../../models/Event');
 const BookingModel = require('../../models/Booking');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const Query = {
     user: async (parent, args) => {
@@ -98,6 +99,34 @@ const Mutation = {
             ...newBooking._doc,
             id: newBooking._doc._id
         }
+    },
+    login: async (parent, args) => {
+        try {
+            const { email, password } = args.input;
+
+            const user = await UserModel.findOne({ email: email });
+            if(!user) throw new Error('invalid credentials');
+            
+            const validPassword = await bcrypt.compare(password, user._doc.password);
+            if(!validPassword) throw new Error('invalid credentials');
+
+            const role = await RoleModel.findById(user._doc.roleId);
+            
+            const token = await jwt.sign({
+                userId: user._doc._id,
+                role: role._doc.role
+            }, process.env.JWT_KEY, {
+                expiresIn: "1200s"
+            });
+
+            return {
+                token: token,
+                userId: user._doc._id,
+                role: user._doc.roleId
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 }
 
@@ -122,4 +151,10 @@ const Event = {
     }
 }
 
-module.exports = { Query, Mutation, User, Event };
+const Auth = {
+    role: async (parent) => {
+        return await RoleModel.findById(parent.role);
+    }
+}
+
+module.exports = { Query, Mutation, User, Event, Auth };

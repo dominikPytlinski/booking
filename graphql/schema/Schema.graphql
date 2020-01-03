@@ -25,6 +25,12 @@ type Booking {
     event: Event!
 }
 
+type Auth {
+    token: String!
+    userId: ID!
+    role: Role!
+}
+
 input userInput {
     email: String!
     password: String!
@@ -46,11 +52,17 @@ input bookingInput {
     eventId: ID!
 }
 
+input loginInput {
+    email: String!
+    password: String!
+}
+
 type Mutation {
     createUser(input: userInput): User!
     createRole(input: roleInput): Role!
     createEvent(input: eventInput): Event!
     bookEvent(input: bookingInput): Booking!
+    login(input: loginInput): Auth!
 }
 
 type Query {
