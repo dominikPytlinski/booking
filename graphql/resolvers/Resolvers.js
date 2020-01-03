@@ -112,7 +112,7 @@ const Mutation = {
 
             const role = await RoleModel.findById(user._doc.roleId);
             
-            const token = await jwt.sign({
+            const token = jwt.sign({
                 userId: user._doc._id,
                 role: role._doc.role
             }, process.env.JWT_KEY, {

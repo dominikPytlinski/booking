@@ -26,7 +26,7 @@ const server = new ApolloServer({
         if(auth) {
             const token = auth.split(' ')[1];
             try {
-                const decoded = await jwt.verify(token, process.env.JWT_KEY);
+                const decoded = jwt.verify(token, process.env.JWT_KEY);
                 return {
                     userId: decoded.userId,
                     role: decoded.role
@@ -41,7 +41,5 @@ const server = new ApolloServer({
 server.applyMiddleware({app});
 
 mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0-kszkn.mongodb.net/booking?retryWrites=true&w=majority`, { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true })
-    .then(
-        app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
-    )
+    .then(app.listen(PORT, () => console.log(`Server started on port ${PORT}`)))
     .catch(err => console.log(err));
