@@ -3,6 +3,7 @@ type User {
     email: String!
     password: String
     role: Role!
+    events: [Event!]
 }
 
 type Role {
