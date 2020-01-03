@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const fs = require('fs');
 const { ApolloServer } = require('apollo-server-express');
 const bodyParser = require('body-parser');
+const jwt = require('jsonwebtoken');
 
 require('dotenv').config();
 
@@ -19,7 +20,22 @@ const resolvers = require('./graphql/resolvers/Resolvers');
 
 const server = new ApolloServer({
     typeDefs,
-    resolvers
+    resolvers,
+    context: ({ req }) => {
+        const auth = req.headers.authorization;
+        if(auth) {
+            const token = auth.split(' ')[1];
+            try {
+                const decoded = await jwt.verify(token, process.env.JWT_KEY);
+                return {
+                    userId: decoded.userId,
+                    role: decoded.role
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
 });
 
 server.applyMiddleware({app});
