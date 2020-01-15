@@ -2,7 +2,7 @@ import React from 'react';
 
 import './MainNavigation.css';
 
-const Header = () => {
+const MainNavigation = () => {
     return ( 
         <header className="header">
             <div className="brand">
@@ -28,4 +28,4 @@ const Header = () => {
      );
 }
  
-export default Header;
+export default MainNavigation;
