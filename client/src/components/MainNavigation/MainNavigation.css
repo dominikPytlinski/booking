@@ -1,0 +1,39 @@
+header.header {
+    height: 5vh;
+    width: 100%;
+    background-color: black;
+    position: fixed;
+    top: 0;
+    left: 0;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+header.header .brand {
+    margin-left: 5vw;
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+}
+
+header.header .main-menu ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+header.header .main-menu ul li {
+    padding: 0 2rem;
+    height: 100%;
+    line-height: 330%;
+    font-weight: 700;
+}
+
+header.header .main-menu ul li:hover {
+    background-color: #ccc;
+    color: #000;
+    cursor: pointer;
+}
