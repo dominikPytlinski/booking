@@ -13,10 +13,10 @@ const MainNavigation = () => {
                 <div className="main-menu">
                     <ul>
                         <li>
-                            <NavLink to="/events" activeClassName="selected">Events</NavLink>
+                            <NavLink to="/events" activeStyle={{ color: "#FFFF99" }}>Events</NavLink>
                         </li>
                         <li>
-                            <NavLink to="/login" activeClassName="selected">Login</NavLink>
+                            <NavLink to="/login" activeStyle={{ color: "#FFFF99" }}>Login</NavLink>
                         </li>
                     </ul>
                 </div>
