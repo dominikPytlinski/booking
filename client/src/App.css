@@ -1,3 +1,21 @@
+:root {
+  --danger-color: #ff4444;
+  --dangerr-color-dark: #CC0000;
+  --warning-color: #ffbb33;
+  --warning-color-dark: #FF8800;
+  --success-color: #00C851;
+  --success-color-dark: #007E33;
+  --info-color: #33b5e5;
+  --info-color-dark: #0099CC;
+  --default-color: #2BBBAD;
+  --default-color-dark: #00695c;
+  --primary-color: #4285F4;
+  --primary-color-dark: #0d47a1;
+  --secondary-color: #aa66cc;
+  --secondary-color-dark: #9933CC;
+  --selected-color: #FFFF99;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -5,4 +23,42 @@
 
 main {
   margin-top: 5vh;
+}
+
+.btn {
+  padding: .5rem;
+  letter-spacing: 1px;
+  border-radius: 3px;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  color: #fff;
+  border: 1px solid var(--primary-color);
+  background-color: var(--primary-color);
+}
+
+.btn-danger {
+  color: #fff;
+  border: 1px solid var(--danger-color);
+  background-color: var(--danger-color);
+}
+
+.btn-info {
+  color: #fff;
+  border: 1px solid var(--info-color);
+  background-color: var(--info-color);
+}
+
+.btn-success {
+  color: #fff;
+  border: 1px solid var(--success-color);
+  background-color: var(--success-color);
+}
+
+.btn-primary:focus,
+.btn-primary:active {
+  box-shadow: 0 0 1pt 1pt var(--primary-color);
 }
